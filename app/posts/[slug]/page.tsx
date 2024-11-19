@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
-  return posts.map(post => ({ params: { slug: post.slug } }));
+  return posts.map(post => ({ slug: post.slug }));
 }
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
