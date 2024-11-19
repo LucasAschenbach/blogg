@@ -1,8 +1,12 @@
 import PostHeader from '@/components/post-header'
-import { getRenderedPost } from '@/lib/posts'  // Your post fetching functions
+import { getAllPosts, getRenderedPost } from '@/lib/posts'  // Your post fetching functions
 import { notFound } from 'next/navigation'
 
-// Individual post page
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map(post => ({ params: { slug: post.slug } }));
+}
+
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = await getRenderedPost(slug)
